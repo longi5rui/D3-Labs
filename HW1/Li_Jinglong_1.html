@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Homework 1</title>
+
+    <style media="screen">
+        body {
+            margin: 0px;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        h1 {
+            background-color: black;
+            color: white;
+            padding: 5px 6px;
+            margin: 0;
+        }
+
+        h2 {
+            margin: 0;
+            padding: 3px 0;
+            margin-bottom: 5px;
+        }
+
+        div#content {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            top: 4px;
+            left: 13px;
+        }
+
+        div#input-div {
+            margin-left: 5px;
+        }
+
+        ul#country-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul#country-list li {
+            padding: 3px 0px;
+        }
+
+        ul#country-list li:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Gapiminder - Wealth and Health of Nations</h1>
+
+    <div id="content">
+        <h2>Countries</h2>
+        <div id="input-div">
+            
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    var newCountry = "A new country";
+    function addLog(newCountry) {
+        if (!newCountry) {
+            newCountry = document.getElementById("input").value;
+        }
+        var countryList = document.getElementById("country-list");
+        var newEntry = document.createElement("li");
+        newEntry.innerHTML = newCountry;
+        countryList.appendChild(newEntry);
+    }
+</script>
+
+</html>

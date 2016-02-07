@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Homework 1</title>
+
+    <style media="screen">
+        body {
+            margin: 0px;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        h1 {
+            background-color: black;
+            color: white;
+            padding: 5px 6px;
+            margin: 0;
+        }
+
+        h2 {
+            margin: 0;
+            padding: 3px 0;
+            margin-bottom: 5px;
+        }
+
+        div#content {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            top: 4px;
+            left: 13px;
+        }
+
+        div#input-div {
+            margin-left: 1px;
+        }
+
+
+        div#input-div div:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Gapiminder - Wealth and Health of Nations</h1>
+
+    <div id="content">
+        <h2>Countries</h2>
+        <div id="input-div"></div>
+    </div>
+</body>
+
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    var data;
+    d3.json("gapminder.json", function(error, result) {
+        data = result;
+        render();
+    })
+    
+    function render() {
+        var update = d3.select("#input-div").selectAll("div").data(data);
+        
+        update.enter()
+                .append("div")
+                .attr("class", "dataset")
+                .text(function(d) {return d.name;});
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</script>
+
+</html>
