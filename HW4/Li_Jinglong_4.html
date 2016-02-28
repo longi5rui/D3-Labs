@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Homework 3</title>
+
+    <style media="screen">
+        body {
+            margin: 0px;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+        
+        h1 {
+            background-color: black;
+            color: white;
+            padding: 5px 6px;
+            margin: 0;
+        }
+        
+        h2 {
+            margin: 0;
+            padding: 3px 0;
+            margin-bottom: 5px;
+        }
+        
+        div#content {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            top: 4px;
+            left: 12px;
+        }
+        
+        #countryList {
+            margin: 0px;
+            float: left;
+            list-style: none;
+            padding-left: 7px;
+        }
+        
+        #countryList li:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .domain {
+            fill: none;
+            stroke: #000;
+        }
+        
+        .tick {
+            font-size: 12px;
+        }
+        
+        .tick line {
+            stroke: lightgray;
+            z-index: -10;
+        }
+        
+        circle {
+            z-index: 10000;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Gapiminder - Wealth and Health of Nations</h1>
+
+    <div id="content">
+        <h2>Countries</h2>
+        <ul class="countryList" id="countryList">
+            
+        </ul>
+        <svg id="viz">
+            <g id="dotsGroup"></g>
+        </svg>
+    </div>
+
+</body>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+    // Global Values
+    var YEAR = 2008;
+    var chartWidth = 570;
+    var chartHeight = 400;
+    var chartMargin = {top: 20, left: 30, right: 60, bottom: 20};
+    var chartInnerHeight = chartHeight - chartMargin.top - chartMargin.bottom;
+    var chartInnerWidth = chartWidth - chartMargin.left - chartMargin.right;
+    
+    // Global Variables
+    var list = d3.select("#countryList");
+    var chart = d3.select("#viz");
+    var dotGroup = chart.append("g")
+                        .attr("transform", "translate(" + chartMargin.left + ", " + chartMargin.top + ")");
+    var xAxisGroup = chart.append("g")
+                        .attr("transform", "translate(" + chartMargin.left + ", " + 
+                              (chartInnerHeight + chartMargin.top) + ")");
+    var yAxisGroup = chart.append("g")
+                          .attr("transform", "translate(" + chartMargin.left + ", " + chartMargin.top + ")");
+    
+    
+    function renderList(data) {
+        list.selectAll("li")
+            .data(data)
+            .enter()
+            .append("li")
+            .attr("class", "listItem")
+            .text(function(d) { return d.name; });
+    }
+    
+    function renderChart(data) {
+        chart.attr("width", chartWidth)
+             .attr("height", chartHeight);
+        
+        var xDomain = d3.max(data, function(d) { return d.income[YEAR]; });
+        var xScale = d3.scale.linear().range([0, chartInnerWidth]).domain([-1000, xDomain]);
+        
+        var yDomain = d3.extent(data, function(d) { return d.lifeExpectancy[YEAR]; });
+        var yScale = d3.scale.linear().range([chartInnerHeight, 0]).domain(yDomain);
+        
+        var sizeDomain = d3.extent(data, function(d) { return d.population[YEAR]; });
+        var sizeScale = d3.scale.linear().range([20, 1000]).domain(sizeDomain);
+        
+        var colorScale = d3.scale.category10();
+        
+        var xAxis = d3.svg.axis().tickSize(-chartInnerHeight).scale(xScale).orient("bottom");
+        xAxisGroup.call(xAxis).append("text").text("Income")
+                  .attr("transform", "translate(" + chartInnerWidth + ", " + chartMargin.bottom + ")");
+        
+        var yAxis = d3.svg.axis().tickSize(-chartInnerWidth).scale(yScale).orient("left");
+        yAxisGroup.call(yAxis).append("text").text("Life Expectancy")
+                  .attr("transform", "translate(" + (-chartMargin.left) + ", " + (-chartMargin.top / 3) + ")");
+        
+        dotGroup.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                    .attr("r", function(d) { return Math.sqrt(sizeScale(d.population[YEAR]) / Math.PI); })
+                    .attr("cx", function(d) { return xScale(d.income[YEAR]); })
+                    .attr("cy", function(d) { return yScale(d.lifeExpectancy[YEAR]); })
+                    .attr("fill", function(d) { return colorScale(d.region); })
+                    .attr("opacity", 0.9);    
+    }
+    
+    function renderWhole(data) {
+        var filteredData = data.filter(function(d) {
+            return d.income[YEAR] && d.lifeExpectancy[YEAR] && d.population[YEAR];
+        });
+        
+        renderList(filteredData);
+        renderChart(filteredData);
+    }
+    
+    d3.json("https://raw.githubusercontent.com/CristianFelix/infoviz/master/Week%203/newData.json", function(error, result) {
+       renderWhole(result); 
+    });
+  
+</script>
+
+</html>

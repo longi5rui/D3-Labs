@@ -1,0 +1,30 @@
+[{
+    "Food": "Apples",
+    "Deliciousness": 9,
+    "Sugar": 10 
+},
+{
+    "Food": "Green Beans",
+    "Deliciousness": 5,
+    "Sugar": 2 
+},
+{
+    "Food": "Egg Salad Sandwich",
+    "Deliciousness": 4,
+    "Sugar": 1
+},
+{
+    "Food": "Cookies",
+    "Deliciousness": 10,
+    "Sugar": 20
+},
+{
+    "Food": "Vegemite",
+    "Deliciousness": 0.2,
+    "Sugar": 0
+},
+{
+    "Food": "Burrito",
+    "Deliciousness": 7,
+    "Sugar": 4
+}]
