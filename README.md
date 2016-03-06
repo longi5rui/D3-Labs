@@ -17,7 +17,7 @@ This project is called ***Gapminder***. It is the first project of my course ***
 
 **Notice:** use this link: to see the dynamic Demo page.
 
-![#1](file:///Users/jrui/git/D3-Labs/demo.png)
+![#1](https://github.com/Jrui2015/D3-Labs/blob/master/demo.png)
 
 ## 4. Contribute!
 
