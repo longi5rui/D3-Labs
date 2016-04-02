@@ -27,7 +27,7 @@ This project is called ***Gapminder***. It is the first project of my course ***
 
 ③ Animated transition between information of all years.
 
-④ User can choose the year form the slide bar.
+④ User can choose the year form the slide bar below the chart.
 
 ⑤ User different colors to mark every country.
 
